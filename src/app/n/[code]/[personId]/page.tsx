@@ -78,7 +78,7 @@ export default async function PersonPage({
               <ArrowLeft size={14} /> Volver al nicho {code}
             </Link>
 
-            <div className="h-32 w-32 overflow-hidden rounded-full border-2 border-accent/40 bg-black/5 shadow-sm">
+            <div className="glow-ring h-32 w-32 overflow-hidden rounded-full border border-border bg-black/5 shadow-sm">
               {person.coverPhotoUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -105,7 +105,7 @@ export default async function PersonPage({
             </div>
 
             {lifespan && (
-              <div className="flex items-center gap-2 text-muted">
+              <div className="flex items-center gap-2 font-technical text-muted">
                 <Calendar size={15} />
                 <span>{lifespan}</span>
                 {age !== null && <span>· {age} años</span>}
@@ -128,7 +128,7 @@ export default async function PersonPage({
                 {person.biography}
               </p>
               {(person.birthDate || person.deathDate) && (
-                <dl className="mt-8 grid grid-cols-2 gap-4 text-sm">
+                <dl className="mt-8 grid grid-cols-2 gap-4 font-technical text-sm">
                   {person.birthDate && (
                     <div>
                       <dt className="text-muted">Nacimiento</dt>
@@ -183,7 +183,7 @@ export default async function PersonPage({
                   <Link
                     key={sib.id}
                     href={`/n/${code}/${sib.id}`}
-                    className="rounded-full border border-border px-4 py-2 text-sm hover:border-accent hover:text-accent"
+                    className="card-glass rounded-full px-4 py-2 text-sm hover:text-accent"
                   >
                     {fullName(sib)}
                   </Link>

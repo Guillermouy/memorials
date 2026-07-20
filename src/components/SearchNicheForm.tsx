@@ -18,7 +18,7 @@ export function SearchNicheForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex w-full max-w-md items-center gap-2 rounded-full border border-border bg-background-elevated p-1.5 pl-5 shadow-sm"
+      className="card-glass flex w-full max-w-md items-center gap-2 rounded-full p-1.5 pl-5"
     >
       <Search size={18} className="shrink-0 text-muted" />
       <input
@@ -30,7 +30,7 @@ export function SearchNicheForm() {
       />
       <button
         type="submit"
-        className="shrink-0 rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
+        className="btn-glow shrink-0 rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
       >
         Buscar
       </button>

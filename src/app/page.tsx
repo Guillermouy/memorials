@@ -39,7 +39,7 @@ export default function Home() {
         <section className="relative overflow-hidden px-5 py-24 sm:py-32">
           <AmbientGlow />
           <div className="relative mx-auto flex max-w-3xl flex-col items-center gap-8 text-center">
-            <span className="rounded-full border border-border px-4 py-1 text-xs uppercase tracking-[0.2em] text-muted">
+            <span className="rounded-full border border-border px-4 py-1 font-technical text-xs uppercase tracking-[0.2em] text-muted">
               Un homenaje digital
             </span>
             <h1 className="font-serif-display text-4xl leading-tight sm:text-6xl">
@@ -62,8 +62,14 @@ export default function Home() {
               ¿Cómo funciona?
             </h2>
             <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-              {steps.map((step) => (
-                <div key={step.title} className="flex flex-col items-center text-center gap-3">
+              {steps.map((step, i) => (
+                <div
+                  key={step.title}
+                  className="card-glass flex flex-col items-center gap-3 rounded-2xl p-6 text-center transition-colors"
+                >
+                  <span className="font-technical text-xs text-muted">
+                    0{i + 1}
+                  </span>
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent/10">
                     <step.icon size={22} className="text-accent" strokeWidth={1.75} />
                   </div>
@@ -76,7 +82,7 @@ export default function Home() {
         </section>
 
         <section className="border-t border-border/80 px-5 py-20">
-          <div className="mx-auto max-w-3xl rounded-3xl border border-border bg-background-elevated p-10 text-center">
+          <div className="card-glass glow-ring relative mx-auto max-w-3xl rounded-3xl p-10 text-center">
             <h2 className="font-serif-display text-3xl">
               ¿Tienes el código de un nicho?
             </h2>

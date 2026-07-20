@@ -24,7 +24,7 @@ export function PersonCard({
   return (
     <Link
       href={`/n/${nicheCode}/${person.id}`}
-      className="group flex items-center gap-4 rounded-2xl border border-border bg-background-elevated p-4 transition-all hover:border-accent/60 hover:shadow-lg hover:shadow-black/5"
+      className="card-glass group flex items-center gap-4 rounded-2xl p-4 transition-all hover:-translate-y-0.5"
     >
       <div className="h-16 w-16 shrink-0 overflow-hidden rounded-full border border-border bg-black/5">
         {person.coverPhotoUrl ? (
@@ -47,7 +47,9 @@ export function PersonCard({
             <span className="text-muted"> &ldquo;{person.nickname}&rdquo;</span>
           )}
         </p>
-        {lifespan && <p className="text-sm text-muted">{lifespan}</p>}
+        {lifespan && (
+          <p className="font-technical text-sm text-muted">{lifespan}</p>
+        )}
         {person.epitaph && (
           <p className="mt-1 truncate text-sm italic text-muted/90">
             {person.epitaph}

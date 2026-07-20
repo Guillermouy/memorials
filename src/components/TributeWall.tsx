@@ -88,7 +88,7 @@ export function TributeWall({
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-col items-center gap-3 rounded-2xl border border-border bg-background-elevated p-6 text-center">
+      <div className="card-glass flex flex-col items-center gap-3 rounded-2xl p-6 text-center">
         <button
           onClick={() => submitTribute("CANDLE")}
           disabled={isPending}
@@ -118,7 +118,7 @@ export function TributeWall({
         </p>
       </div>
 
-      <div className="rounded-2xl border border-border bg-background-elevated p-6">
+      <div className="card-glass rounded-2xl p-6">
         <h3 className="font-serif-display text-2xl">Dejar un mensaje</h3>
         <div className="mt-4 space-y-3">
           <input
@@ -141,7 +141,7 @@ export function TributeWall({
           <button
             onClick={() => submitTribute("MESSAGE")}
             disabled={isPending}
-            className="flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90 disabled:opacity-60"
+            className="btn-glow flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90 disabled:opacity-60"
           >
             <Send size={15} />
             Enviar mensaje
@@ -161,12 +161,12 @@ export function TributeWall({
                   key={t.id}
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="rounded-xl border border-border bg-background-elevated p-4"
+                  className="card-glass rounded-xl p-4"
                 >
                   <p className="text-sm leading-relaxed text-foreground/90">
                     &ldquo;{t.message}&rdquo;
                   </p>
-                  <p className="mt-2 text-xs text-muted">
+                  <p className="mt-2 font-technical text-xs text-muted">
                     {t.authorName || "Anónimo"} · {timeAgo(t.createdAt)}
                   </p>
                 </motion.li>

@@ -55,7 +55,8 @@ export default async function NicheQrPage({
         </Link>
 
         <h1 className="font-serif-display text-3xl">
-          Código QR — Nicho {niche.code}
+          Código QR — Nicho{" "}
+          <span className="font-technical text-accent">{niche.code}</span>
         </h1>
         <p className="max-w-sm text-sm text-muted print:hidden">
           Imprime este código y colócalo en el nicho para que los visitantes
@@ -69,13 +70,13 @@ export default async function NicheQrPage({
           className="h-64 w-64 rounded-2xl border border-border bg-white p-4 sm:h-80 sm:w-80"
         />
 
-        <p className="text-xs text-muted">{url}</p>
+        <p className="font-technical text-xs text-muted">{url}</p>
 
         <div className="flex gap-3 print:hidden">
           <a
             href={qrDataUrl}
             download={`nicho-${niche.code}.png`}
-            className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-background hover:opacity-90"
+            className="btn-glow inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-background hover:opacity-90"
           >
             Descargar PNG
           </a>

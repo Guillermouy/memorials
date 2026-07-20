@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { PersonCard } from "@/components/PersonCard";
+import { AmbientGlow } from "@/components/AmbientGlow";
 
 export const dynamic = "force-dynamic";
 
@@ -54,14 +55,15 @@ export default async function NichePage({
   return (
     <div className="flex flex-1 flex-col">
       <SiteHeader breadcrumb={niche.cemetery.name} />
-      <main className="flex-1 px-5 py-16">
-        <div className="mx-auto max-w-2xl">
+      <main className="relative flex-1 overflow-hidden px-5 py-16">
+        <AmbientGlow />
+        <div className="relative mx-auto max-w-2xl">
           <div className="text-center">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1 text-xs uppercase tracking-wider text-muted">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1 font-technical text-xs uppercase tracking-wider text-muted">
               <MapPin size={13} /> {niche.cemetery.name}
             </span>
             <h1 className="mt-5 font-serif-display text-4xl">
-              Nicho {niche.code}
+              Nicho <span className="font-technical text-accent">{niche.code}</span>
             </h1>
             {(locationParts.length > 0 || niche.note) && (
               <p className="mt-2 text-muted">

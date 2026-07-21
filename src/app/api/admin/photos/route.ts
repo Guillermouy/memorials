@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { verifySession } from "@/lib/auth";
 
 const MAX_BYTES = 8 * 1024 * 1024; // 8 MB
 const ALLOWED = new Set([
@@ -14,6 +15,12 @@ const ALLOWED = new Set([
 // Postgres and served back via GET /api/photos/[id]. Done as a Route Handler
 // (not a Server Action) to avoid the Server Action body-size limit.
 export async function POST(request: Request) {
+  // Se responde 401 en vez de redirigir: quien llama es el `fetch` del
+  // uploader, que espera JSON y muestra el mensaje de error.
+  if (!(await verifySession())) {
+    return NextResponse.json({ error: "No autorizado." }, { status: 401 });
+  }
+
   const form = await request.formData().catch(() => null);
   if (!form) {
     return NextResponse.json({ error: "Cuerpo inválido." }, { status: 400 });

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ChevronRight, Plus, QrCode, Trash2, User } from "lucide-react";
 import { prisma } from "@/lib/prisma";
+import { requireUser } from "@/lib/auth";
 import { createPerson, deleteNiche, updateNiche } from "@/lib/admin-actions";
 import { fullName } from "@/lib/format";
 import { Banner, Field, SectionCard, Textarea } from "@/components/admin/ui";
@@ -15,6 +16,7 @@ export default async function NicheAdminPage({
   searchParams: Promise<{ error?: string; saved?: string; deleted?: string }>;
 }) {
   const { id } = await params;
+  await requireUser(`/admin/niches/${id}`);
   const sp = await searchParams;
 
   const niche = await prisma.niche.findUnique({

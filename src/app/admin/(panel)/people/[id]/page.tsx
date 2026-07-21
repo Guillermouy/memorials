@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Flame, Star, Trash2, User } from "lucide-react";
 import { prisma } from "@/lib/prisma";
+import { requireUser } from "@/lib/auth";
 import {
   clearCoverPhoto,
   deletePerson,
@@ -30,6 +31,7 @@ export default async function PersonAdminPage({
   searchParams: Promise<{ error?: string; saved?: string; deleted?: string }>;
 }) {
   const { id } = await params;
+  await requireUser(`/admin/people/${id}`);
   const sp = await searchParams;
 
   const person = await prisma.person.findUnique({

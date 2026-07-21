@@ -124,6 +124,9 @@ body {
   mask-composite: exclude;
   animation: spin-glow 6s linear infinite;
   opacity: 0.6;
+  /* Es decoración: sin esto el anillo tapa la tarjeta y se come los clics,
+     dejando sin foco a lo que haya dentro (p. ej. el input del buscador). */
+  pointer-events: none;
 }
 
 @property --angle {

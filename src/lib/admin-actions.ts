@@ -3,11 +3,16 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { requireUser } from "@/lib/auth";
 
 /**
- * Server Actions backing the (login-less) admin panel under /admin.
+ * Server Actions backing the admin panel under /admin.
  * Forms post FormData directly to these; on validation errors we redirect back
  * with an `?error=` query param that the page renders as a banner.
+ *
+ * Cada acción llama a `requireUser()` antes de tocar nada. No es redundante con
+ * el proxy: una Server Action es un endpoint POST con su propio identificador,
+ * y quien lo conozca puede invocarlo sin pasar por la página que lo usa.
  */
 
 function str(fd: FormData, key: string): string | null {
@@ -42,8 +47,9 @@ function fail(path: string, message: string): never {
 // ─────────────────────────────── Cemetery ───────────────────────────────
 
 export async function createCemetery(fd: FormData) {
+  await requireUser();
   const name = str(fd, "name");
-  if (!name) fail("/admin", "El nombre del cementerio es obligatorio.");
+  if (!name) fail("/admin/cemeteries", "El nombre del cementerio es obligatorio.");
 
   const cemetery = await prisma.cemetery.create({
     data: {
@@ -54,11 +60,12 @@ export async function createCemetery(fd: FormData) {
     },
   });
 
-  revalidatePath("/admin");
+  revalidatePath("/admin/cemeteries");
   redirect(`/admin/cemeteries/${cemetery.id}`);
 }
 
 export async function updateCemetery(fd: FormData) {
+  await requireUser();
   const id = req(fd, "id");
   if (!id) redirect("/admin");
   const name = str(fd, "name");
@@ -79,16 +86,18 @@ export async function updateCemetery(fd: FormData) {
 }
 
 export async function deleteCemetery(fd: FormData) {
+  await requireUser();
   const id = req(fd, "id");
   if (!id) redirect("/admin");
   await prisma.cemetery.delete({ where: { id } });
-  revalidatePath("/admin");
-  redirect("/admin?deleted=cementerio");
+  revalidatePath("/admin/cemeteries");
+  redirect("/admin/cemeteries?deleted=cementerio");
 }
 
 // ──────────────────────────────── Niche ─────────────────────────────────
 
 export async function createNiche(fd: FormData) {
+  await requireUser();
   const cemeteryId = req(fd, "cemeteryId");
   if (!cemeteryId) redirect("/admin");
   const code = str(fd, "code");
@@ -116,6 +125,7 @@ export async function createNiche(fd: FormData) {
 }
 
 export async function updateNiche(fd: FormData) {
+  await requireUser();
   const id = req(fd, "id");
   if (!id) redirect("/admin");
   const code = str(fd, "code");
@@ -144,6 +154,7 @@ export async function updateNiche(fd: FormData) {
 }
 
 export async function deleteNiche(fd: FormData) {
+  await requireUser();
   const id = req(fd, "id");
   const cemeteryId = req(fd, "cemeteryId");
   if (!id) redirect("/admin");
@@ -155,6 +166,7 @@ export async function deleteNiche(fd: FormData) {
 // ──────────────────────────────── Person ────────────────────────────────
 
 export async function createPerson(fd: FormData) {
+  await requireUser();
   const nicheId = req(fd, "nicheId");
   if (!nicheId) redirect("/admin");
   const firstName = str(fd, "firstName");
@@ -181,6 +193,7 @@ export async function createPerson(fd: FormData) {
 }
 
 export async function updatePerson(fd: FormData) {
+  await requireUser();
   const id = req(fd, "id");
   if (!id) redirect("/admin");
   const firstName = str(fd, "firstName");
@@ -208,6 +221,7 @@ export async function updatePerson(fd: FormData) {
 }
 
 export async function deletePerson(fd: FormData) {
+  await requireUser();
   const id = req(fd, "id");
   const nicheId = req(fd, "nicheId");
   if (!id) redirect("/admin");
@@ -220,6 +234,7 @@ export async function deletePerson(fd: FormData) {
 // (Uploads are handled by POST /api/admin/photos; these cover the rest.)
 
 export async function deletePhoto(fd: FormData) {
+  await requireUser();
   const id = req(fd, "id");
   const personId = req(fd, "personId");
   if (!id || !personId) redirect("/admin");
@@ -244,6 +259,7 @@ export async function deletePhoto(fd: FormData) {
 }
 
 export async function setCoverPhoto(fd: FormData) {
+  await requireUser();
   const personId = req(fd, "personId");
   const url = str(fd, "url");
   if (!personId || !url) redirect("/admin");
@@ -256,6 +272,7 @@ export async function setCoverPhoto(fd: FormData) {
 }
 
 export async function clearCoverPhoto(fd: FormData) {
+  await requireUser();
   const personId = req(fd, "personId");
   if (!personId) redirect("/admin");
   await prisma.person.update({
@@ -269,6 +286,7 @@ export async function clearCoverPhoto(fd: FormData) {
 // ─────────────────────────────── Tributes ───────────────────────────────
 
 export async function deleteTribute(fd: FormData) {
+  await requireUser();
   const id = req(fd, "id");
   const personId = req(fd, "personId");
   if (!id || !personId) redirect("/admin");

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ChevronRight, Grid3x3, Plus, Trash2 } from "lucide-react";
 import { prisma } from "@/lib/prisma";
+import { requireUser } from "@/lib/auth";
 import {
   createNiche,
   deleteCemetery,
@@ -18,6 +19,7 @@ export default async function CemeteryAdminPage({
   searchParams: Promise<{ error?: string; saved?: string; deleted?: string }>;
 }) {
   const { id } = await params;
+  await requireUser(`/admin/cemeteries/${id}`);
   const sp = await searchParams;
 
   const cemetery = await prisma.cemetery.findUnique({

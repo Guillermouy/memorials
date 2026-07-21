@@ -52,7 +52,6 @@ export default function Home() {
               descansan ahí: su historia, sus fotos y los recuerdos que
               dejaron en quienes los amaron.
             </p>
-            <SearchForm />
           </div>
         </section>
 

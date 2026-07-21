@@ -12,7 +12,7 @@ import { QrPoster } from "@/components/QrPoster";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Código QR del nicho",
+  title: "Código QR del lugar",
 };
 
 async function getNicheUrl(code: string) {
@@ -48,22 +48,22 @@ export default async function NicheQrPage({
 
   return (
     <div className="flex flex-1 flex-col">
-      <SiteHeader breadcrumb={`Nicho ${niche.code}`} />
+      <SiteHeader breadcrumb={`Lugar ${niche.code}`} />
       <main className="flex flex-1 flex-col items-center justify-center gap-6 px-5 py-16 text-center">
         <Link
           href={`/n/${niche.code}`}
           className="flex items-center gap-1.5 text-sm text-muted hover:text-accent"
         >
-          <ArrowLeft size={14} /> Volver al nicho
+          <ArrowLeft size={14} /> Volver al lugar
         </Link>
 
         <div>
           <h1 className="font-serif-display text-3xl">
-            Código QR — Nicho{" "}
+            Código QR — Lugar{" "}
             <span className="font-technical text-accent">{niche.code}</span>
           </h1>
           <p className="mx-auto mt-2 max-w-sm text-sm text-muted">
-            Descarga, comparte o imprime esta placa y colócala en el nicho para
+            Descarga, comparte o imprime esta placa y colócala en el lugar para
             que los visitantes escaneen su historia.
           </p>
         </div>

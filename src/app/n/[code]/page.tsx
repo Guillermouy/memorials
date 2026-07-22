@@ -13,6 +13,11 @@ import { peopleByDeathDate } from "@/lib/people";
 
 export const dynamic = "force-dynamic";
 
+/// La cápsula con el nombre del cementerio, arriba del código del lugar. Se
+/// comparte entre la versión enlazada al mapa y la de solo texto.
+const cemeteryBadge =
+  "inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1 font-technical text-xs uppercase tracking-wider text-muted";
+
 async function getNiche(code: string) {
   return prisma.niche.findUnique({
     where: { code },
@@ -65,9 +70,22 @@ export default async function NichePage({
         <AmbientGlow />
         <div className="relative mx-auto max-w-2xl">
           <div className="text-center">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1 font-technical text-xs uppercase tracking-wider text-muted">
-              <MapPin size={13} /> {niche.cemetery.name}
-            </span>
+            {niche.cemetery.latitude !== null && niche.cemetery.longitude !== null ? (
+              // Con coordenadas cargadas, el nombre del cementerio lleva al
+              // mapa. Sin ellas sigue siendo texto: el nombre es el dato que
+              // ubica a la persona, y perderlo por no tener el par sería peor
+              // que no ofrecer el enlace.
+              <MapLink
+                latitude={niche.cemetery.latitude}
+                longitude={niche.cemetery.longitude}
+                label={niche.cemetery.name}
+                className={`${cemeteryBadge} transition-colors hover:border-accent hover:text-accent`}
+              />
+            ) : (
+              <span className={cemeteryBadge}>
+                <MapPin size={13} /> {niche.cemetery.name}
+              </span>
+            )}
             <h1 className="mt-5 font-serif-display text-4xl">
               Lugar <span className="font-technical text-accent">{niche.code}</span>
             </h1>

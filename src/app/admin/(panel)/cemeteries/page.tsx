@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Building2, ChevronRight, Plus } from "lucide-react";
+import { Building2, ChevronRight, Map, Plus } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/auth";
 import { createCemetery } from "@/lib/admin-actions";
@@ -51,6 +51,15 @@ export default async function CemeteriesPage({
                         {people} persona{people === 1 ? "" : "s"}
                       </span>
                     </span>
+                    {c.latitude !== null && c.longitude !== null && (
+                      // Indicador, no enlace: la fila entera ya es un enlace y
+                      // anidar uno dentro de otro es HTML inválido.
+                      <Map
+                        size={14}
+                        className="shrink-0 text-accent"
+                        aria-label="Tiene ubicación en el mapa"
+                      />
+                    )}
                     <ChevronRight size={16} className="shrink-0 text-muted" />
                   </Link>
                 </li>
@@ -73,6 +82,12 @@ export default async function CemeteriesPage({
             <Field label="País" name="country" placeholder="México" />
           </div>
           <Field label="Dirección" name="address" placeholder="Av. Principal 123" />
+          <Field
+            label="Coordenadas"
+            name="coordinates"
+            placeholder="-34.858118, -56.228550"
+            hint="Opcional. Pegá acá lo que copiás de Google Maps: la entrada del cementerio."
+          />
           <SubmitButton>
             <Plus size={15} /> Crear cementerio
           </SubmitButton>

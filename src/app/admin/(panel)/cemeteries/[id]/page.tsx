@@ -8,6 +8,8 @@ import {
   deleteCemetery,
   updateCemetery,
 } from "@/lib/admin-actions";
+import { MapLink } from "@/components/MapLink";
+import { formatCoordinates } from "@/lib/coordinates";
 import { Banner, Field, SectionCard } from "@/components/admin/ui";
 import { ConfirmSubmit, SubmitButton } from "@/components/admin/actions-ui";
 
@@ -51,6 +53,18 @@ export default async function CemeteryAdminPage({
             <Field label="País" name="country" defaultValue={cemetery.country} />
           </div>
           <Field label="Dirección" name="address" defaultValue={cemetery.address} />
+          <Field
+            label="Coordenadas"
+            name="coordinates"
+            defaultValue={formatCoordinates(cemetery.latitude, cemetery.longitude)}
+            placeholder="-34.858118, -56.228550"
+            hint="Pegá acá lo que copiás de Google Maps: la entrada del cementerio. Dejalo vacío para quitar la ubicación."
+          />
+          <MapLink
+            latitude={cemetery.latitude}
+            longitude={cemetery.longitude}
+            label="Comprobar la ubicación en Google Maps"
+          />
           <SubmitButton>Guardar cambios</SubmitButton>
         </form>
       </SectionCard>

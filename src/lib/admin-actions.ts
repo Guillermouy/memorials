@@ -45,12 +45,17 @@ export async function createCemetery(fd: FormData) {
   const name = str(fd, "name");
   if (!name) fail("/admin/cemeteries", "El nombre del cementerio es obligatorio.");
 
+  const coords = parseCoordinates(str(fd, "coordinates"));
+  if (!coords.ok) fail("/admin/cemeteries", coords.error);
+
   const cemetery = await prisma.cemetery.create({
     data: {
       name,
       city: str(fd, "city"),
       country: str(fd, "country"),
       address: str(fd, "address"),
+      latitude: coords.value?.latitude ?? null,
+      longitude: coords.value?.longitude ?? null,
     },
   });
 
@@ -65,6 +70,9 @@ export async function updateCemetery(fd: FormData) {
   const name = str(fd, "name");
   if (!name) fail(`/admin/cemeteries/${id}`, "El nombre es obligatorio.");
 
+  const coords = parseCoordinates(str(fd, "coordinates"));
+  if (!coords.ok) fail(`/admin/cemeteries/${id}`, coords.error);
+
   await prisma.cemetery.update({
     where: { id },
     data: {
@@ -72,6 +80,8 @@ export async function updateCemetery(fd: FormData) {
       city: str(fd, "city"),
       country: str(fd, "country"),
       address: str(fd, "address"),
+      latitude: coords.value?.latitude ?? null,
+      longitude: coords.value?.longitude ?? null,
     },
   });
 

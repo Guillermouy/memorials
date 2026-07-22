@@ -17,6 +17,10 @@ model Cemetery {
   city      String?
   country   String?
   address   String?
+  /// Ubicación del portón, no de una tumba: sirve para llegar al cementerio.
+  /// Las coordenadas del Niche, en cambio, llevan hasta la tumba misma.
+  latitude  Float?
+  longitude Float?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

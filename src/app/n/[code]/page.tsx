@@ -9,6 +9,7 @@ import { PersonCard } from "@/components/PersonCard";
 import { MapLink } from "@/components/MapLink";
 import { AmbientGlow } from "@/components/AmbientGlow";
 import { photoSelect } from "@/lib/photos";
+import { peopleByDeathDate } from "@/lib/people";
 
 export const dynamic = "force-dynamic";
 
@@ -18,7 +19,7 @@ async function getNiche(code: string) {
     include: {
       cemetery: true,
       people: {
-        orderBy: { createdAt: "asc" },
+        orderBy: peopleByDeathDate,
         include: {
           photos: { orderBy: { order: "asc" }, take: 1, select: photoSelect },
         },

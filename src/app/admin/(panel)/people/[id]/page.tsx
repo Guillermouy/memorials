@@ -78,7 +78,7 @@ export default async function PersonAdminPage({
           <Field label="Apodo" name="nickname" defaultValue={person.nickname} />
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Nacimiento" name="birthDate" type="date" defaultValue={toDateInput(person.birthDate)} />
-            <Field label="Fallecimiento" name="deathDate" type="date" defaultValue={toDateInput(person.deathDate)} />
+            <Field label="Fallecimiento" name="deathDate" type="date" required defaultValue={toDateInput(person.deathDate)} />
           </div>
           <Field label="Epitafio" name="epitaph" defaultValue={person.epitaph} />
           <Textarea label="Biografía" name="biography" rows={6} defaultValue={person.biography} />

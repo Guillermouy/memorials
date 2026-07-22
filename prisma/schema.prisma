@@ -52,7 +52,10 @@ model Person {
   lastName    String
   nickname    String?
   birthDate   DateTime?
-  deathDate   DateTime?
+  /// Obligatoria: es el dato que ordena a las personas de un nicho y el eje de
+  /// la página conmemorativa. El nacimiento sí puede faltar — de las tumbas
+  /// viejas a veces no se sabe.
+  deathDate   DateTime
   epitaph     String?
   biography   String?
   coverPhotoUrl String?

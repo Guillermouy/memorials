@@ -7,6 +7,7 @@ import { MapLink } from "@/components/MapLink";
 import { formatCoordinates } from "@/lib/coordinates";
 import { createPerson, deleteNiche, updateNiche } from "@/lib/admin-actions";
 import { fullName } from "@/lib/format";
+import { peopleByDeathDate } from "@/lib/people";
 import { Banner, Field, SectionCard, Textarea } from "@/components/admin/ui";
 import { ConfirmSubmit, SubmitButton } from "@/components/admin/actions-ui";
 
@@ -25,7 +26,7 @@ export default async function NicheAdminPage({
     where: { id },
     include: {
       cemetery: true,
-      people: { orderBy: { createdAt: "asc" } },
+      people: { orderBy: peopleByDeathDate },
     },
   });
 
@@ -132,7 +133,7 @@ export default async function NicheAdminPage({
           <Field label="Apodo" name="nickname" placeholder="Mari" />
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Nacimiento" name="birthDate" type="date" />
-            <Field label="Fallecimiento" name="deathDate" type="date" />
+            <Field label="Fallecimiento" name="deathDate" type="date" required />
           </div>
           <Field label="Epitafio" name="epitaph" placeholder="Siempre en nuestros corazones" />
           <Textarea label="Biografía" name="biography" placeholder="Su historia…" />

@@ -175,6 +175,11 @@ export async function createPerson(fd: FormData) {
     fail(`/admin/niches/${nicheId}`, "Nombre y apellido son obligatorios.");
   }
 
+  const deathDate = date(fd, "deathDate");
+  if (!deathDate) {
+    fail(`/admin/niches/${nicheId}`, "La fecha de fallecimiento es obligatoria.");
+  }
+
   const person = await prisma.person.create({
     data: {
       nicheId,
@@ -184,7 +189,7 @@ export async function createPerson(fd: FormData) {
       epitaph: str(fd, "epitaph"),
       biography: str(fd, "biography"),
       birthDate: date(fd, "birthDate"),
-      deathDate: date(fd, "deathDate"),
+      deathDate,
       coverPhotoUrl: str(fd, "coverPhotoUrl"),
     },
   });
@@ -202,6 +207,11 @@ export async function updatePerson(fd: FormData) {
     fail(`/admin/people/${id}`, "Nombre y apellido son obligatorios.");
   }
 
+  const deathDate = date(fd, "deathDate");
+  if (!deathDate) {
+    fail(`/admin/people/${id}`, "La fecha de fallecimiento es obligatoria.");
+  }
+
   await prisma.person.update({
     where: { id },
     data: {
@@ -211,7 +221,7 @@ export async function updatePerson(fd: FormData) {
       epitaph: str(fd, "epitaph"),
       biography: str(fd, "biography"),
       birthDate: date(fd, "birthDate"),
-      deathDate: date(fd, "deathDate"),
+      deathDate,
       coverPhotoUrl: str(fd, "coverPhotoUrl"),
     },
   });

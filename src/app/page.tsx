@@ -34,7 +34,7 @@ const steps = [
 export default function Home() {
   return (
     <div className="flex flex-1 flex-col">
-      <SiteHeader />
+      <SiteHeader admin />
       <main className="flex-1">
         <section className="relative overflow-hidden px-5 py-24 sm:py-32">
           <AmbientGlow />

@@ -9,6 +9,7 @@ import { TributeWall, type TributeData } from "@/components/TributeWall";
 import { PersonAvatar } from "@/components/PersonAvatar";
 import { SocialLinks } from "@/components/SocialLinks";
 import { photoSelect, photoSrc } from "@/lib/photos";
+import { peopleByDeathDate } from "@/lib/people";
 import {
   formatFullDate,
   formatLifespan,
@@ -22,7 +23,12 @@ async function getPerson(code: string, personId: string) {
   const person = await prisma.person.findUnique({
     where: { id: personId },
     include: {
-      niche: { include: { cemetery: true, people: true } },
+      niche: {
+        include: {
+          cemetery: true,
+          people: { orderBy: peopleByDeathDate },
+        },
+      },
       photos: {
         orderBy: { order: "asc" },
         select: { ...photoSelect, caption: true },
